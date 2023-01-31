@@ -1,5 +1,6 @@
 package com.androiddevs.mvvmnewsapp.ui.adapters
 
+import android.util.Log.i
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,11 +38,13 @@ class NewsAdapter:RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val article= differ.currentList[position]
         holder.itemView.apply {
-            Glide.with(this).load(article.url)
+            Glide.with(this).load(article.urlToImage)
                 .into(ivArticleImage)
+            //i("image#${position}",article.url)
             tvSource.text=article.source.name
             tvDescription.text=article.description
             tvPublishedAt.text=article.publishedAt
+            tvTitle.text=article.title
 
             setOnItemClickListener {
                 onItemClickListener?.let {
