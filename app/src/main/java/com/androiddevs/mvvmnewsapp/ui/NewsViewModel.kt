@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.androiddevs.mvvmnewsapp.ui.Repository.NewsRepository
+import com.androiddevs.mvvmnewsapp.ui.models.Article
 import com.androiddevs.mvvmnewsapp.ui.models.NewsResponse
 import com.androiddevs.mvvmnewsapp.ui.utils.Resource
 import kotlinx.coroutines.launch
@@ -43,5 +44,17 @@ class NewsViewModel(
         }
         return Resource.Error(response.message())
     }
+
+    fun saveArticle(article: Article)=viewModelScope.launch {
+        newsRepository.insertUpdate(article)
+    }
+
+    fun deleteArticle(article: Article) =viewModelScope.launch {
+        newsRepository.deleteArticles(article)
+    }
+
+    fun getSavedNews()= newsRepository.getAllArticles()
+
+    fun isArtAlreadySaved(artUrl:String) = newsRepository.isArtAlreadySaved(artUrl)
 
 }

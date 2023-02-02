@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.androiddevs.mvvmnewsapp.R
 import com.androiddevs.mvvmnewsapp.ui.fragments.BreakingNewsFragment
+import com.androiddevs.mvvmnewsapp.ui.fragments.SavedNewsFragment
 import com.androiddevs.mvvmnewsapp.ui.fragments.SearchNewsFragment
 import com.androiddevs.mvvmnewsapp.ui.models.Article
 import com.bumptech.glide.Glide
@@ -75,6 +76,13 @@ class NewsAdapter(val fragment:Fragment):RecyclerView.Adapter<NewsAdapter.Articl
                             bundle
                         )
                     }
+                    is SavedNewsFragment ->{
+                        findNavController().navigate(
+                            R.id.
+                            action_savedNewsFragment_to_articleFragment2,
+                            bundle
+                        )
+                    }
 
                 }
 
@@ -86,9 +94,9 @@ class NewsAdapter(val fragment:Fragment):RecyclerView.Adapter<NewsAdapter.Articl
         return differ.currentList.size
     }
 
-    private var onItemClickListener:((Article)->Unit) ?=null
-
-    fun setOnItemClickListener(listener:(Article)->Unit){
-        onItemClickListener=listener
-    }
+//    private var onItemClickListener:((Article)->Unit) ?=null
+//
+//    fun setOnItemClickListener(listener:(Article)->Unit){
+//        onItemClickListener=listener
+//    }
 }

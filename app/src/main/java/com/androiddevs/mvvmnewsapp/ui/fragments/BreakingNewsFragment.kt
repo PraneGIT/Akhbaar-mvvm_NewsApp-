@@ -27,8 +27,6 @@ class BreakingNewsFragment :Fragment(R.layout.fragment_breaking_news){
 
         setupRecyclerView()
 
-
-
         viewModel.breakingNews.observe(viewLifecycleOwner, Observer { response->
             when(response){
                 is Resource.Success->{
@@ -55,7 +53,6 @@ class BreakingNewsFragment :Fragment(R.layout.fragment_breaking_news){
         newsAdapter= NewsAdapter(this)
         rvBreakingNews.adapter=newsAdapter
         rvBreakingNews.layoutManager=LinearLayoutManager(activity)
-
     }
 
     private fun hideProgressBar(){
