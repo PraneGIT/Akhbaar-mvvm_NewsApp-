@@ -3,8 +3,11 @@ package com.androiddevs.mvvmnewsapp.ui.fragments
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.androiddevs.mvvmnewsapp.R
 import com.androiddevs.mvvmnewsapp.ui.MainActivity
@@ -23,6 +26,9 @@ class BreakingNewsFragment :Fragment(R.layout.fragment_breaking_news){
         viewModel=(activity as MainActivity).viewModel
 
         setupRecyclerView()
+
+
+
         viewModel.breakingNews.observe(viewLifecycleOwner, Observer { response->
             when(response){
                 is Resource.Success->{
@@ -46,9 +52,10 @@ class BreakingNewsFragment :Fragment(R.layout.fragment_breaking_news){
     }
 
     private fun setupRecyclerView(){
-        newsAdapter= NewsAdapter()
+        newsAdapter= NewsAdapter(this)
         rvBreakingNews.adapter=newsAdapter
         rvBreakingNews.layoutManager=LinearLayoutManager(activity)
+
     }
 
     private fun hideProgressBar(){

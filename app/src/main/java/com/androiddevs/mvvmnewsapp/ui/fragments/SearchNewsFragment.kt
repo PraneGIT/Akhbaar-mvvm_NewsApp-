@@ -6,6 +6,7 @@ import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.androiddevs.mvvmnewsapp.R
 import com.androiddevs.mvvmnewsapp.ui.MainActivity
@@ -32,6 +33,7 @@ class SearchNewsFragment :Fragment(R.layout.fragment_search_news){
             viewModel.getSearchedNews(query)
 
             setupRecyclerView()
+
             viewModel.searchNews.observe(viewLifecycleOwner, Observer { response->
                 when(response){
                     is Resource.Success->{
@@ -57,7 +59,7 @@ class SearchNewsFragment :Fragment(R.layout.fragment_search_news){
     }
 
     private fun setupRecyclerView(){
-        newsAdapter= NewsAdapter()
+        newsAdapter= NewsAdapter(this)
         rvSearchNews.adapter=newsAdapter
         rvSearchNews.layoutManager= LinearLayoutManager(activity)
     }

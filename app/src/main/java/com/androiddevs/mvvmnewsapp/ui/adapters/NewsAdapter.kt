@@ -1,18 +1,28 @@
 package com.androiddevs.mvvmnewsapp.ui.adapters
 
+import android.os.Bundle
+import android.util.Log.e
 import android.util.Log.i
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.androiddevs.mvvmnewsapp.R
+import com.androiddevs.mvvmnewsapp.ui.fragments.BreakingNewsFragment
+import com.androiddevs.mvvmnewsapp.ui.fragments.SearchNewsFragment
 import com.androiddevs.mvvmnewsapp.ui.models.Article
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_article_preview.view.*
 
-class NewsAdapter:RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
+class NewsAdapter(val fragment:Fragment):RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
 
     inner class ArticleViewHolder(itemView:View):RecyclerView.ViewHolder(itemView)
 
@@ -40,16 +50,34 @@ class NewsAdapter:RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
         holder.itemView.apply {
             Glide.with(this).load(article.urlToImage)
                 .into(ivArticleImage)
-            //i("image#${position}",article.url)
+
             tvSource.text=article.source.name
             tvDescription.text=article.description
             tvPublishedAt.text=article.publishedAt
             tvTitle.text=article.title
 
-            setOnItemClickListener {
-                onItemClickListener?.let {
-                    it(article)
+
+            setOnClickListener {
+
+                val bundle = Bundle().apply {
+                    putSerializable("article",article)
                 }
+                when(fragment){
+                    is BreakingNewsFragment ->{
+                        findNavController().navigate(
+                            R.id.action_breakingNewsFragment_to_articleFragment,
+                            bundle
+                        )
+                    }
+                    is SearchNewsFragment ->{
+                        findNavController().navigate(
+                            R.id.action_searchNewsFragment_to_articleFragment,
+                            bundle
+                        )
+                    }
+
+                }
+
             }
         }
     }
