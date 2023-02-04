@@ -52,7 +52,7 @@ class NewsAdapter(val fragment:Fragment):RecyclerView.Adapter<NewsAdapter.Articl
             Glide.with(this).load(article.urlToImage)
                 .into(ivArticleImage)
 
-            tvSource.text=article.source.name
+            tvSource.text=article.source?.name
             tvDescription.text=article.description
             tvPublishedAt.text=article.publishedAt
             tvTitle.text=article.title

@@ -20,7 +20,6 @@ class ArticleFragment :Fragment(R.layout.fragment_article){
     lateinit var viewModel: NewsViewModel
     val args:ArticleFragmentArgs by navArgs()
 
-    @SuppressLint("ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

@@ -14,7 +14,7 @@ interface newsAPI {
         @Query("page")
         page:Int=1,
         @Query("apiKey")
-        apiKey:String=Constants.API_KEY
+        apiKey:String="75bce8f0756b40a59b27d0ba8b2a5a0f"
         ):Response<NewsResponse>
 
     @GET("v2/everything")
@@ -24,7 +24,7 @@ interface newsAPI {
         @Query("page")
         page:Int=1,
         @Query("apiKey")
-        apiKey:String=Constants.API_KEY
+        apiKey:String="75bce8f0756b40a59b27d0ba8b2a5a0f"
     ):Response<NewsResponse>
 
 }

@@ -2,19 +2,21 @@ package com.androiddevs.mvvmnewsapp.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
+import android.util.Log.e
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.androiddevs.mvvmnewsapp.R
+import com.androiddevs.mvvmnewsapp.ui.Constants.Constants
 import com.androiddevs.mvvmnewsapp.ui.MainActivity
 import com.androiddevs.mvvmnewsapp.ui.NewsViewModel
 import com.androiddevs.mvvmnewsapp.ui.adapters.NewsAdapter
 import com.androiddevs.mvvmnewsapp.ui.utils.Resource
 import kotlinx.android.synthetic.main.fragment_breaking_news.*
+
 
 class BreakingNewsFragment :Fragment(R.layout.fragment_breaking_news){
     lateinit var viewModel:NewsViewModel
@@ -24,6 +26,7 @@ class BreakingNewsFragment :Fragment(R.layout.fragment_breaking_news){
         super.onViewCreated(view, savedInstanceState)
 
         viewModel=(activity as MainActivity).viewModel
+        var canPaginate=true
 
         setupRecyclerView()
 
@@ -32,7 +35,11 @@ class BreakingNewsFragment :Fragment(R.layout.fragment_breaking_news){
                 is Resource.Success->{
                     hideProgressBar()
                     response.data?.let { newsResponse ->
-                        newsAdapter.differ.submitList(newsResponse.articles)
+                        newsAdapter.differ.submitList(newsResponse.articles.toList())
+                        val totalPages =newsResponse.totalResults
+                        if(viewModel.breakingNewsPage==totalPages/Constants.QUERY_PAGE_SIZE +2){
+                            canPaginate=false
+                        }
                     }
                 }
                 is Resource.Error->{
@@ -47,12 +54,25 @@ class BreakingNewsFragment :Fragment(R.layout.fragment_breaking_news){
             }
 
         })
+
+        rvBreakingNews.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!recyclerView.canScrollVertically(1)) {
+                    //Toast.makeText(context, "Last", Toast.LENGTH_LONG).show()
+                   if(canPaginate) {
+                       viewModel.getBreakingNews("in")
+                   }
+                }
+            }
+        })
     }
 
     private fun setupRecyclerView(){
         newsAdapter= NewsAdapter(this)
         rvBreakingNews.adapter=newsAdapter
         rvBreakingNews.layoutManager=LinearLayoutManager(activity)
+
     }
 
     private fun hideProgressBar(){
@@ -61,4 +81,7 @@ class BreakingNewsFragment :Fragment(R.layout.fragment_breaking_news){
     private fun showProgressBar(){
         paginationProgressBar.visibility=View.VISIBLE
     }
+
+
+
 }
