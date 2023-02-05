@@ -53,8 +53,8 @@ class NewsAdapter(val fragment:Fragment):RecyclerView.Adapter<NewsAdapter.Articl
                 .into(ivArticleImage)
 
             tvSource.text=article.source?.name
-            tvDescription.text=article.description
-            tvPublishedAt.text=article.publishedAt
+            //tvDescription.text=article.description
+            tvPublishedAt.text=article.publishedAt?.subSequence(0, 10)
             tvTitle.text=article.title
 
 
