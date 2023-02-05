@@ -52,6 +52,8 @@ class SearchNewsFragment :Fragment(R.layout.fragment_search_news){
                         hideProgressBar()
                         response.message?.let {
                             Log.e("search news fragment:",it)
+                            Toast.makeText(context, "Err: $it", Toast.LENGTH_SHORT).show()
+
                         }
                     }
                     is Resource.Loading->{

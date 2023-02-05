@@ -46,6 +46,7 @@ class BreakingNewsFragment :Fragment(R.layout.fragment_breaking_news){
                     hideProgressBar()
                     response.message?.let {
                         Log.e("breaking news fragment:",it)
+                        Toast.makeText(context, "Err: $it", Toast.LENGTH_SHORT).show()
                     }
                 }
                 is Resource.Loading->{
